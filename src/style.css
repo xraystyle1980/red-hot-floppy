@@ -1,0 +1,49 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body
+{
+    height: 100%;
+    overflow: hidden;
+    background: radial-gradient(circle at 50% 0%, #292C33, #0B0C0E);
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    color: #6F768C;
+    transition: all 1s ease-in-out;
+}
+
+a {
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 12px;
+    color: #4D505D;
+    text-decoration: none;
+    transition: all 1s ease-in-out;
+}
+
+a:hover {
+    color: #FF849F;
+}
+
+.webgl
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    outline: none;
+}
+
+.nunito-base {
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
