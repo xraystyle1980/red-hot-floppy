@@ -45,10 +45,10 @@ a:hover {
 }
 
 .nunito-base {
-  font-family: "Nunito", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 300;
-  font-style: normal;
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
 }
 
 .header {
@@ -64,8 +64,12 @@ a:hover {
     opacity: 68%;
 }
 
+.footer .figma {
+    width: 20px;
+    opacity: 68%;
+}
+
 .footer {
-    text-align: center; 
     position: absolute; 
     bottom: 0; 
     width: 100%;
