@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
-import { BloomEffect, EffectComposer, EffectPass, RenderPass, KernelSize } from "postprocessing";
+import { BloomEffect, EffectComposer, EffectPass, RenderPass, KernelSize } from "postprocessing" 
 import { WebGLRenderer } from 'three'
 import GUI from 'lil-gui'
 
@@ -27,48 +27,48 @@ const gui = new GUI({ title: 'Red Hot Floppy' })
  */
 const textureLoader = new THREE.TextureLoader()
 const emissiveMap = textureLoader.load('./textures/floppy/floppyEmissive-grad.png')
-emissiveMap.flipY = false;
+emissiveMap.flipY = false 
 emissiveMap.colorSpace = THREE.SRGBColorSpace
 
 // Declare a global reference for the model
-let model = null;
+let model = null 
 
 /**
  * Objects
  */
-const loader = new GLTFLoader();
+const loader = new GLTFLoader() 
 loader.load(
     'models/floppy.glb',
     function (gltf) {
-        model = gltf.scene; // Assign the model to the global reference
-        scene.add(model);
+        model = gltf.scene  // Assign the model to the global reference
+        scene.add(model) 
 
         // Traverse through the children of the model
         model.traverse((child) => {
             if (child.isMesh) {
                 // Add emissive properties to the material
-                child.material.emissive = new THREE.Color(0xFB6260); // Set base color 
-                child.material.emissiveMap = emissiveMap; // Apply the emissive map
-                child.material.emissiveIntensity = 5; // Adjust the brightness of the emission
-                child.material.needsUpdate = true; // Ensure the material is updated
+                child.material.emissive = new THREE.Color(0xFB6260)  // Set base color 
+                child.material.emissiveMap = emissiveMap  // Apply the emissive map
+                child.material.emissiveIntensity = 5  // Adjust the brightness of the emission
+                child.material.needsUpdate = true  // Ensure the material is updated
             }
-        });
+        }) 
 
         // Emissive Intensity Control
         gui.add({ emissiveIntensity: 5 }, 'emissiveIntensity').min(0).max(5).step(0.01).name('Intensity').onChange((value) => {
             model.traverse((child) => {
                 if (child.isMesh && child.material) {
-                    child.material.emissiveIntensity = value;
-                    child.material.needsUpdate = true;
+                    child.material.emissiveIntensity = value 
+                    child.material.needsUpdate = true 
                 }
-            });
-        });
+            }) 
+        }) 
     },
     undefined,
     function (error) {
-        console.error('An error occurred while loading the model:', error);
+        console.error('An error occurred while loading the model:', error) 
     }
-);
+) 
 
 
 /**
@@ -86,26 +86,26 @@ const sizes = {
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
 camera.position.x = 0
-camera.position.y = 0
+camera.position.y = 1
 camera.position.z = 7
 scene.add(camera)
 
 // Controls
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
-controls.panSpeed = .075;
-controls.minAzimuthAngle = - ( Math.PI / 2 ) + 0.35;
-controls.maxAzimuthAngle = ( Math.PI / 2 ) - 0.35;
-controls.dampingFactor = 0.1;
-controls.minDistance = 5;
-controls.maxDistance = 8;
+controls.panSpeed = .075 
+controls.minAzimuthAngle = - ( Math.PI / 2 ) + 0.35 
+controls.maxAzimuthAngle = ( Math.PI / 2 ) - 0.35 
+controls.dampingFactor = 0.1 
+controls.minDistance = 5 
+controls.maxDistance = 8 
 
 
 /**
  * Lights
  */
-const ambientLight = new THREE.AmbientLight(0xffffff, 2.1);
-scene.add(ambientLight);
+const ambientLight = new THREE.AmbientLight(0xffffff, 2.1) 
+scene.add(ambientLight) 
 
 
 /**
@@ -114,7 +114,7 @@ scene.add(ambientLight);
 const renderer = new WebGLRenderer({
 	powerPreference: "high-performance",
     canvas: canvas,
-	antialias: false,
+	antialias: true,
 	stencil: false,
     alpha: true
 })
@@ -128,7 +128,7 @@ const bloomEffect = new BloomEffect({
     luminanceThreshold: 0.05,     // Luminance threshold for bloom
     luminanceSmoothing: 1,
     kernelSize: KernelSize.VERY_LARGE
-});
+}) 
 
 const bloomPass = new EffectPass(camera, bloomEffect)
 
@@ -138,9 +138,9 @@ composer.addPass(new RenderPass(scene, camera))
 composer.addPass(bloomPass)
 
 requestAnimationFrame(function render() {
-	requestAnimationFrame(render);
-	composer.render();
-});
+	requestAnimationFrame(render) 
+	composer.render() 
+}) 
 
 renderer.setSize(sizes.width, sizes.height)
 composer.setSize(sizes.width, sizes.height)
@@ -151,17 +151,17 @@ composer.setSize(sizes.width, sizes.height)
  */
 window.addEventListener('resize', () => {
     // Update sizes
-    sizes.width = window.innerWidth;
-    sizes.height = window.innerHeight;
+    sizes.width = window.innerWidth 
+    sizes.height = window.innerHeight 
 
     // Update camera
-    camera.aspect = sizes.width / sizes.height;
-    camera.updateProjectionMatrix();
+    camera.aspect = sizes.width / sizes.height 
+    camera.updateProjectionMatrix() 
 
     // Update renderer
-    renderer.setSize(sizes.width, sizes.height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Keep only one setPixelRatio here
-});
+    renderer.setSize(sizes.width, sizes.height) 
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))  // Keep only one setPixelRatio here
+}) 
 
 
 /**
@@ -173,13 +173,14 @@ const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
 
-    // Update controls
     controls.update()
 
-    // Render
+    if (model) {
+        model.position.y = Math.sin(elapsedTime) * 0.25
+    }
+
     renderer.render(scene, camera)
 
-    // Call tick again on the next frame
     window.requestAnimationFrame(tick)
 }
 
