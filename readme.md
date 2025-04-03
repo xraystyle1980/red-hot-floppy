@@ -52,10 +52,4 @@ The built files will be in the `dist` directory.
 
 ## 📝 License
 
-This project is private and not licensed for public use.
-
-## 🔧 Project Structure
-
-- `src/` - Source files
-- `public/` - Static assets
-- `dist/` - Production build output
+This project is licensed under the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/).
